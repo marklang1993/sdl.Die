@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SeekBar;
 
+import java.util.Timer;
+
 public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener {
     private final static String TAG = MainActivity.class.getSimpleName();
 
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
     private Cube cube;
     private Pyramid pyramid;
     private Icosahedron icosahedron;
+
+    private Animation animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +44,14 @@ public class MainActivity extends AppCompatActivity implements SeekBar.OnSeekBar
         pyramid = new Pyramid();
         icosahedron = new Icosahedron();
 
+        animation = new Animation(seekBarX, seekBarY, seekBarZ);
+
         renderer.setObj(cube);
         glView.setRenderer(renderer);
+
+
+        Timer timer = new Timer();
+        timer.schedule(animation, 0, 30);
     }
 
     @Override
